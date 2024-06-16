@@ -9,12 +9,20 @@ const Navbar = () => {
 
     const links = [
         {
+            title: "About",
+            path: "/about",
+        },
+        {
             title: "Posts",
             path: "/posts",
         },
         {
             title: "Meals",
             path: "/meals",
+        },
+        {
+            title: "Gallery",
+            path: "/gallery",
         },
     ]
     const handler = () => {

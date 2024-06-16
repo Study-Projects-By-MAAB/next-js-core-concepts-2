@@ -1,5 +1,12 @@
 import Meals from "@/components/Meals"
-import styles from './styles.module.css'
+import styles from "./styles.module.css"
+
+export const metadata = {
+    title: {
+        absolute: "Meals",
+    },
+    description: "Meals Page",
+}
 
 const MealsPage = () => {
     return (
