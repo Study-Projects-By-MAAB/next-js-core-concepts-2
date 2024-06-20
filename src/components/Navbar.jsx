@@ -55,9 +55,14 @@ const Navbar = () => {
                 </ul>
                 <div className="flex gap-2 items-center flex-row-reverse">
                     {session.status !== "authenticated" ? (
-                        <button onClick={handler} className="bg-white text-cyan-400 p-3 ">
-                            Login
-                        </button>
+                        <>
+                            <button onClick={handler} className="bg-white text-cyan-400 p-3 ">
+                                Login
+                            </button>
+                            <Link href={"/api/auth/signup"} className="bg-white text-cyan-400 p-3 ">
+                                Sign Up
+                            </Link>
+                        </>
                     ) : (
                         <>
                             <button onClick={() => signOut()} className="bg-white text-cyan-400 p-3 ">
