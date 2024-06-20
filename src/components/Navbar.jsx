@@ -1,5 +1,5 @@
 "use client"
-import { useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
@@ -9,7 +9,7 @@ const Navbar = () => {
     const pathName = usePathname()
     const router = useRouter()
     const session = useSession()
-    console.log(session)
+    // console.log(session)
     const links = [
         {
             title: "About",
@@ -27,14 +27,18 @@ const Navbar = () => {
             title: "Gallery",
             path: "/gallery",
         },
+        {
+            title: "Dashboard",
+            path: "/dashboard",
+        },
     ]
     const handler = () => {
         router.push("/api/auth/signin")
     }
 
-    if (pathName.includes("dashboard")) {
-        return <div className="bg-green-400 p-6">Dashboard Layout</div>
-    }
+    // if (pathName.includes("dashboard")) {
+    //     return <div className="bg-green-400 p-6">Dashboard Layout</div>
+    // }
 
     return (
         <div>
@@ -49,27 +53,31 @@ const Navbar = () => {
                         </Link>
                     ))}
                 </ul>
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center flex-row-reverse">
                     {session.status !== "authenticated" ? (
-                        <button onClick={handler} className="bg-white text-cyan-400 p-4 rounded-2xl">
+                        <button onClick={handler} className="bg-white text-cyan-400 p-3 ">
                             Login
                         </button>
                     ) : (
                         <>
-                            <button className="bg-white text-cyan-400 p-4 rounded-2xl">Logout</button>
+                            <button onClick={() => signOut()} className="bg-white text-cyan-400 p-3 ">
+                                Logout
+                            </button>
 
                             <div>
-                                <h6>
+                                <h6 className="flex flex-row-reverse items-center justify-center gap-3">
                                     <Image
                                         src={session?.data?.user.image}
                                         height={40}
                                         width={40}
                                         alt={session?.data?.user.name}
+                                        className="rounded-full"
                                     />
-                                    <br />
-                                    {session?.data?.user.name}
-                                    <br />
-                                    {session?.data?.user.type}
+                                    <div className="text-white">
+                                        {session?.data?.user.name}
+                                        <br />
+                                        {session?.data?.user.type}
+                                    </div>
                                 </h6>
                             </div>
                         </>
