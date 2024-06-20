@@ -1,4 +1,6 @@
 "use client"
+import { useSession } from "next-auth/react"
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import React from "react"
@@ -6,7 +8,8 @@ import React from "react"
 const Navbar = () => {
     const pathName = usePathname()
     const router = useRouter()
-
+    const session = useSession()
+    console.log(session)
     const links = [
         {
             title: "About",
@@ -26,7 +29,7 @@ const Navbar = () => {
         },
     ]
     const handler = () => {
-        router.push("/login")
+        router.push("/api/auth/signin")
     }
 
     if (pathName.includes("dashboard")) {
@@ -46,9 +49,32 @@ const Navbar = () => {
                         </Link>
                     ))}
                 </ul>
-                <button onClick={handler} className="bg-white text-cyan-400 p-4 rounded-2xl">
-                    Login
-                </button>
+                <div className="flex gap-2 items-center">
+                    {session.status !== "authenticated" ? (
+                        <button onClick={handler} className="bg-white text-cyan-400 p-4 rounded-2xl">
+                            Login
+                        </button>
+                    ) : (
+                        <>
+                            <button className="bg-white text-cyan-400 p-4 rounded-2xl">Logout</button>
+
+                            <div>
+                                <h6>
+                                    <Image
+                                        src={session?.data?.user.image}
+                                        height={40}
+                                        width={40}
+                                        alt={session?.data?.user.name}
+                                    />
+                                    <br />
+                                    {session?.data?.user.name}
+                                    <br />
+                                    {session?.data?.user.type}
+                                </h6>
+                            </div>
+                        </>
+                    )}
+                </div>
             </nav>
         </div>
     )

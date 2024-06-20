@@ -1,5 +1,7 @@
 import React from "react"
 import { Oswald } from "next/font/google"
+import { getServerSession } from "next-auth"
+import { authOptions } from "../api/auth/[...nextauth]/route"
 
 const oswald = Oswald({ weight: ["400"], subsets: ["latin"] })
 
@@ -23,6 +25,8 @@ const getTime = async () => {
 }
 
 const AboutPage = async () => {
+    const session = await getServerSession(authOptions)
+    console.log(session);
     const currentTime = await getTime()
     return (
         <div className={oswald.className}>
