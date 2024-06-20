@@ -1,14 +1,17 @@
-"use client"
-import Link from "next/link"
-import React from "react"
+"use client";
+import Link from "next/link";
+import React from "react";
 
 const SignUpPage = () => {
     const handleRegister = async (e) => {
-        e.preventDefault()
-        const name = e.target.name.value
-        const email = e.target.email.value
-        const password = e.target.password.value
-        const newUser = { name, email, password }
+        e.preventDefault();
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        const image = e.target.image.value;
+        const type = e.target.type.value;
+
+        const newUser = { name, email, password, image, type };
 
         const resp = await fetch("http://localhost:3000/api/auth/signup/new-user", {
             method: "POST",
@@ -16,9 +19,9 @@ const SignUpPage = () => {
             headers: {
                 "Content-Type": "application/json",
             },
-        })
-        console.log(resp)
-    }
+        });
+        console.log(resp);
+    };
     return (
         <div className="font-[sans-serif] text-gray-800 bg-white max-w-4xl flex items-center mx-auto  p-4">
             <div className="grid md:grid-cols-3 items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl overflow-hidden">
@@ -129,6 +132,33 @@ const SignUpPage = () => {
                                 </svg>
                             </div>
                         </div>
+                        <div>
+                            <label className="text-sm mb-2 block">Image</label>
+                            <div className="relative flex items-center">
+                                <input
+                                    name="image"
+                                    type="url"
+                                    required
+                                    className="bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
+                                    placeholder="Enter image Url"
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <label className="text-sm mb-2 block">Type</label>
+                            <div className="relative flex items-center">
+                                <select
+                                    name="type"
+                                    required
+                                    className="bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
+                                    placeholder="select Type"
+                                >
+                                    <option value="admin">Admin</option>
+                                    <option value="moderator">Moderator</option>
+                                    <option value="member">Member</option>
+                                </select>
+                            </div>
+                        </div>
                         <div className="flex items-center">
                             <input
                                 id="remember-me"
@@ -159,7 +189,7 @@ const SignUpPage = () => {
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default SignUpPage
+export default SignUpPage;
