@@ -2,6 +2,7 @@ import connectDB from "@/lib/connectDB";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
 
 export const authOptions = {
     secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
@@ -12,7 +13,7 @@ export const authOptions = {
     providers: [
         CredentialsProvider({
             credentials: {
-                email: { label: "email", type: "text", required: true, placeholder: "Your Email" },
+                email: { label: "Email", type: "text", required: true, placeholder: "Your Email" },
                 password: { label: "Password", type: "password", required: true, placeholder: "Enter Password" },
             },
 
@@ -37,6 +38,10 @@ export const authOptions = {
         GoogleProvider({
             clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
             clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
+        }),
+        GitHubProvider({
+            clientId: process.env.NEXT_PUBLIC_GITHUB_ID,
+            clientSecret: process.env.NEXT_PUBLIC_GITHUB_SECRET,
         }),
     ],
     callbacks: {
